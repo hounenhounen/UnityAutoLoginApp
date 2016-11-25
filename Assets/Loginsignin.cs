@@ -11,6 +11,7 @@ public class Loginsignin : MonoBehaviour
 {
 	public InputField UserName;
 	public InputField PassWord;
+	public Text Status;
 	// Use this for initialization
 	void Start ()
 	{
@@ -19,19 +20,20 @@ public class Loginsignin : MonoBehaviour
 			accountData = GenerateIdPW ();
 			UserName.text = accountData ["Id"];
 			PassWord.text = accountData ["PW"];
-			UnityEditor.EditorUtility.DisplayDialog("AutoAcount", "Generate Id&PW", "OK");
+			Status.text = "Generate Id&PW";
 		} else {
 			UserName.text = PlayerPrefs.GetString ("Id");
 			PassWord.text = PlayerPrefs.GetString ("PW");
-			UnityEditor.EditorUtility.DisplayDialog("AutoAcount", "Read Id&PW From PlayerPrefs", "OK");
+			Status.text = "Read Id&PW From PlayerPrefs";
+
 		}
 
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
-	
+
 	}
 
 	public void Login ()
@@ -39,11 +41,8 @@ public class Loginsignin : MonoBehaviour
 		print (UserName.text);
 		print (PassWord.text);
 
-		//NCMBUserのインスタンス作成 
-		NCMBUser user = new NCMBUser ();
-
 		// ユーザー名とパスワードでログイン
-		NCMBUser.LogInAsync (UserName.text, PassWord.text, (NCMBException e) => {    
+		NCMBUser.LogInAsync (UserName.text, PassWord.text, (NCMBException e) => {
 			if (e != null) {
 				UnityEngine.Debug.Log ("ログインに失敗: " + e.ErrorMessage);
 			} else {
@@ -60,15 +59,15 @@ public class Loginsignin : MonoBehaviour
 		print (PassWord.text);
 
 
-		//NCMBUserのインスタンス作成 
+		//NCMBUserのインスタンス作成
 		NCMBUser user = new NCMBUser ();
-		
+
 		//ユーザ名とパスワードの設定
 		user.UserName = UserName.text;
 		user.Password = PassWord.text;
-		
+
 		//会員登録を行う
-		user.SignUpAsync ((NCMBException e) => { 
+		user.SignUpAsync ((NCMBException e) => {
 			if (e != null) {
 				UnityEngine.Debug.Log ("新規登録に失敗: " + e.ErrorMessage);
 			} else {
@@ -81,7 +80,7 @@ public class Loginsignin : MonoBehaviour
 		});
 
 	}
-
+  //Id,PWの自動生成箇所
 	public Dictionary<string,string> GenerateIdPW(){
 		Dictionary<string, string> accountData = new Dictionary<string, string> ();
 		System.Guid idGuid=System.Guid.NewGuid();
