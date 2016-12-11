@@ -59,14 +59,14 @@ public class Loginsignin : MonoBehaviour
 		print (PassWord.text);
 
 
-		//NCMBUserのインスタンス作成
+		// NCMBUserのインスタンス作成
 		NCMBUser user = new NCMBUser ();
 
-		//ユーザ名とパスワードの設定
+		// ユーザ名とパスワードの設定
 		user.UserName = UserName.text;
 		user.Password = PassWord.text;
 
-		//会員登録を行う
+		// 会員登録を行う
 		user.SignUpAsync ((NCMBException e) => {
 			if (e != null) {
 				UnityEngine.Debug.Log ("新規登録に失敗: " + e.ErrorMessage);
@@ -80,19 +80,22 @@ public class Loginsignin : MonoBehaviour
 		});
 
 	}
-  //Id,PWの自動生成箇所
-	public Dictionary<string,string> GenerateIdPW(){
+
+	// Id,PWの自動生成箇所
+	public Dictionary<string,string> GenerateIdPW ()
+	{
 		Dictionary<string, string> accountData = new Dictionary<string, string> ();
-		System.Guid idGuid=System.Guid.NewGuid();
-		System.Guid pwGuid=System.Guid.NewGuid();
-		string Id_uuid=idGuid.ToString();
-		string PW_uuid=pwGuid.ToString();
+		System.Guid idGuid = System.Guid.NewGuid();
+		System.Guid pwGuid = System.Guid.NewGuid();
+		string Id_uuid = idGuid.ToString();
+		string PW_uuid = pwGuid.ToString();
 		accountData.Add ("Id",Id_uuid);
 		accountData.Add ("PW",PW_uuid);
 		return accountData;
 	}
 
-	public void DeletePlayerPrefs(){
+	public void DeletePlayerPrefs()
+	{
 		PlayerPrefs.DeleteAll();
 		UserName.text = "";
 		PassWord.text = "";
